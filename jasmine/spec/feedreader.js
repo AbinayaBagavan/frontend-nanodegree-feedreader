@@ -11,13 +11,9 @@
 $(function() {
     
     describe('RSS Feeds', function() {
-        /* This is our first test - it tests to make sure that the
-         * allFeeds variable has been defined and that it is not
-         * empty. Experiment with this before you get started on
-         * the rest of this project. What happens when you change
-         * allFeeds in app.js to be an empty array and refresh the
-         * page?
-         */
+        /*This is the first test - it tests to make sure that the
+         allFeeds variable has been defined and that it is not
+          empty*/
         it('all the feeds are defined', function() {
             expect(allFeeds).toBeDefined();             //check the feed array is defined
             expect(allFeeds.length).not.toBe(0);        //check all the feed properties are not empty
@@ -44,7 +40,9 @@ $(function() {
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
+    /* This is the second test suite. 
+    It makes sure that the menu changes its visibility on clicks and 
+    checks its default visibility */
     describe('The menu',function(){
 
         var body=document.querySelector('body'),
@@ -64,7 +62,8 @@ $(function() {
     });
 
         
-    /* TODO: Write a new test suite named "Initial Entries" */
+    /* This is the third test suite it make sure that 
+    the feed list is initially not empty */
     describe('Initial Entries',function(){
 
         beforeEach(function(done){
@@ -80,31 +79,27 @@ $(function() {
         });
     });
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    /* This is the fourth test suite it checks whether the
+    feed list's content changes on selection*/
     describe('New Feed Selection',function(){
             var feed=document.querySelector('.feed'),
-                content=feed.innerHTML;                 //storing the initial container of feed list
+                content;                 //storing the initial container of feed list
             beforeEach(function(done){
-                loadFeed(1,done);                       //changing the feed list
+                loadFeed(0,function(){
+                    content=feed.innerHTML;
+                    loadFeed(1,function(){
+                            done();
+                    });
+                });                       //changing the feed list
             });
 
-            it('loadFeed should change the content when it is called',function(done){
+            it('loadFeed should change the content when it is called',function(){
+
                 expect(feed.innerHTML).not.toBe(content);                          //checking the container of feed list after changing  
-                loadFeed(0,function(){});
-                done();
             });
 
     });
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+        
 }());
